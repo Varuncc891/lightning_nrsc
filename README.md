@@ -4,19 +4,19 @@ A real-time lightning strike monitoring dashboard built with **PostgreSQL/PostGI
 
 ## File Structure
 lightning_nrsc/
-│
+
 ├── README.md
 ├── INSTALL.md
 ├── .gitignore
-│
+
 ├── proxy/
 │ ├── bhuvan_proxy.py
 │ └── test_proxy.py
-│
+
 ├── config/
 │ ├── superset_config.py
 │ └── requirements.txt
-│
+
 └── database/
 │ └── schema.sql
 
@@ -83,6 +83,3 @@ superset run -p 8088
 ## 5. Database Connection String
 
 ```postgresql://<username>:<password>@<host>:5432/nrsc_lightning_db```
-
-
-alright, we're done with readme, tell me if this is good or not
