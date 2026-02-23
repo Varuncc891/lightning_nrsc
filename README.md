@@ -1,76 +1,88 @@
-# Job Portal App with MERN Stack
+## Lightning Monitoring Dashboard for NRSC/ISRO
 
-A comprehensive job portal application built using the MERN (MongoDB, Express.js, React.js, Node.js) stack. This application allows users to browse job listings, apply for jobs, and manage their applications seamlessly.It features two dedicated portals one for employers to post and manage job opportunities, and another for job seekers to search, apply, and track their applications.
+A real-time lightning strike monitoring dashboard built with **PostgreSQL/PostGIS** and **Apache Superset 6.0**, integrated with **Bhuvan TMS services** via a Python proxy server.
 
-## Features
+## File Structure
+lightning_nrsc/
+│
+├── README.md
+├── INSTALL.md
+├── .gitignore
+│
+├── proxy/
+│ ├── bhuvan_proxy.py
+│ └── test_proxy.py
+│
+├── config/
+│ ├── superset_config.py
+│ └── requirements.txt
+│
+└── database/
+│ └── schema.sql
 
-- **User Authentication:** Secure authentication using JWT (JSON Web Tokens) for both job seekers and employers.
-- **Job Listings:** Browse through a wide range of job listings fetched from MongoDB.
-- **Application Management:** Job seekers can manage their job applications, and employers can view and manage received applications.
-- **Responsive Design:** Ensures a seamless experience across all devices.
 
-## Technologies Used
+## 🛠️ Software Versions
 
-- **Frontend:** React.js, React Router, Bootstrap
-- **Backend:** Node.js, Express.js, MongoDB
-- **Authentication:** JWT (JSON Web Tokens), Bcrypt (for password hash)
-- **Image Upload:** Cloudinary for storing and managing uploaded images
+| Component | Version |
+|-----------|---------|
+| **PostgreSQL** | 15 |
+| **PostGIS** | 3.4 |
+| **Apache Superset** | 6.0 |
+| **Python** | 3.11 |
+| **Flask** | 2.3.3 |
+| **Git** | Latest |
 
-## Getting Started
 
-To get a local copy up and running follow these simple steps.
+### 1. Clone Repository
 
-### Prerequisites
+```sh
+git clone https://github.com/Varuncc891/lightning_nrsc.git
+cd lightning_nrsc
+```
 
-- Node.js installed on your machine with latest version or v22.2.0 above
-- MongoDB Atlas account (or local MongoDB server)
-- Cloudinary account for image storage
 
-### Installation
+### 2. Database Setup
 
-1. Clone the repo:
-   ```sh
-   git clone https://github.com/Varuncc891/JobConnect.git
-   ```
-2. Install NPM packages:
+Create database
+```
+psql -U <db_user> -c "CREATE DATABASE nrsc_lightning_db;"
+```
 
-   ```sh
-   cd JobConnect
-   cd backend
-   npm install
-   cd..
-   cd frontend
-   npm install
-   ```
+Enable PostGIS
+```
+psql -U <db_user> -d nrsc_lightning_db -c "CREATE EXTENSION postgis;"
+```
 
-3. ## If you don't want to change the`.env` credentials skip step 4 and move to step 5.
+Import schema (creates tables, indexes, views)
+```
+psql -U <db_user> -d nrsc_lightning_db -f database/schema.sql
+```
 
-4. Set up environment variables:
 
-   - Create a `config.env` file after creating a `config folder` in the backend directory, containing the following variables:
 
-   ```env
-   PORT=
-   CLOUDINARY_API_KEY=
-   CLOUDINARY_API_SECRET=
-   CLOUDINARY_CLOUD_NAME=
-   FRONTEND_URL=
-   DB_URL=
-   JWT_SECRET_KEY=
-   JWT_EXPIRE=
-   COOKIE_EXPIRE=
-   ```
+## 3. Python Proxy Server
 
-   Replace each value with your specific configuration details.
+Install dependencies
+```
+cd proxy
+pip install -r ../config/requirements.txt
+```
 
-5. Run the application backend (make sure you are in `/backend` directory) :
+Start proxy server
+```
+python bhuvan_proxy.py
+```
 
-   ```sh
-   node server.js
-   ```
+## 4. Superset Configuration
+```
+set SUPERSET_CONFIG_PATH=C:\path\to\superset_config.py
+superset run -p 8088
+```
 
-6. Run the application frontend (make sure you are in `/frontend` directory) :
-   ```sh
-   npm run dev
-   ```
-7. Open your browser and navigate to `http://localhost:5173` to view the app.
+
+## 5. Database Connection String
+
+```postgresql://<username>:<password>@<host>:5432/nrsc_lightning_db```
+
+
+alright, we're done with readme, tell me if this is good or not
