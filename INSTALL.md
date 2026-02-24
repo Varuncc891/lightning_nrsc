@@ -43,7 +43,7 @@ superset run -p 8088
 # Step 5: Database Connection String
 
 
-postgresql://postgres:postgres123@localhost:5432/nrsc_lightning_db
+postgresql://<username>:<password>@<host>:5432/nrsc_lightning_db
 
 
 # Step 6: Create Datasets in Superset
